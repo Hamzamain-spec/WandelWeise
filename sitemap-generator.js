@@ -17,17 +17,17 @@
 // ============================================================
 const SITE_CONFIG = {
     // YOUR SITE'S DOMAIN (CHANGE THIS!)
-    BASE_URL: 'https://dein-site-name.de',  // <-- CHANGE THIS FOR EACH SITE
+    BASE_URL: 'http://wandelweise.schadlab.de',  // <-- CHANGE THIS FOR EACH SITE
     
     // Your site's unique identifier (matches your SITE_NAME constant)
-    SITE_ID: 'dein-site-id',  // <-- CHANGE THIS (e.g., 'zeitgeist', 'nordlicht')
+    SITE_ID: 'WandelWeise',  // <-- CHANGE THIS (e.g., 'zeitgeist', 'nordlicht')
     
     // GIST CONFIGURATION (same for all sites)
     GIST_ID: '42ea11087f40fdba423f8eb0f575ac96',
     GIST_OWNER: 'Hamzamain-spec',
     
     // The sitemap file in your Gist - now using SITE_ID to keep them separate in the Gist
-    SITEMAP_GIST_FILENAME: 'sitemap_' + 'dein-site-id' + '.xml'
+    SITEMAP_GIST_FILENAME: 'sitemap_' + 'WandelWeise' + '.xml'
 };
 
 // ============================================================
