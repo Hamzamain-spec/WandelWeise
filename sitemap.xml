@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sitemap</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .loading { color: #666; }
+        .error { color: #c00; background: #fee; padding: 20px; border-radius: 8px; }
+        a { color: #0066cc; }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <h1>Sitemap wird geladen...</h1>
+        <p class="loading">Bitte einen Moment Geduld.</p>
+    </div>
+
+    <script>
+    (async function() {
+        const contentDiv = document.getElementById('content');
+        
+        try {
+            // Determine which site this is from the URL
+            const siteUrl = window.location.origin;
+            const pathParts = window.location.pathname.split('/');
+            const siteDomain = pathParts[2] || window.location.hostname;
+            
+            // Map your domains to site IDs
+            const siteMap = {
+                'zeitgeist.de': 'zeitgeist',
+                'nordlicht.de': 'nordlicht',
+                'landleben.geizfoto.de': 'landleben',
+                // Add all your sites here!
+            };
+            
+            const siteId = siteMap[siteDomain] || 'unknown';
+            
+            if (siteId === 'unknown') {
+                throw new Error('Site nicht erkannt: ' + siteDomain);
+            }
+            
+            const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+            const GIST_OWNER = 'Hamzamain-spec';
+            const sitemapUrl = `https://gist.githubusercontent.com/${GIST_OWNER}/${GIST_ID}/raw/sitemap_${siteId}.xml`;
+            
+            const response = await fetch(sitemapUrl);
+            
+            if (!response.ok) {
+                throw new Error('Sitemap nicht gefunden');
+            }
+            
+            const sitemapXml = await response.text();
+            
+            // Display as XML
+            contentDiv.innerHTML = '';
+            const pre = document.createElement('pre');
+            pre.style.textAlign = 'left';
+            pre.style.background = '#f5f5f5';
+            pre.style.padding = '20px';
+            pre.style.overflow = 'auto';
+            pre.style.borderRadius = '8px';
+            pre.textContent = sitemapXml;
+            contentDiv.appendChild(pre);
+            
+        } catch (e) {
+            contentDiv.innerHTML = `
+                <h1>❌ Fehler</h1>
+                <div class="error">
+                    <p>${e.message}</p>
+                    <p>Mögliche Ursachen:</p>
+                    <ul style="text-align:left">
+                        <li>Noch keine Sitemap generiert</li>
+                        <li>GitHub Token fehlt</li>
+                        <li>Keine Artikel vorhanden</li>
+                    </ul>
+                    <p><a href="admin.html">→ Zum Admin-Bereich</a></p>
+                </div>
+            `;
+        }
+    })();
+    </script>
+</body>
+</html>
