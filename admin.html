@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — WandelWeise</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;7..72,400;7..72,500;7..72,600;7..72,700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F8F5F0;--white:#FFFFFF;--card:#FFFFFF;
+  --ink:#2A2A2A;--mid:#3A3A3A;
+  --border:#E0D8D0;--border2:#C8C0B8;
+  --accent:#9E7D5E;--accent2:#7E5E42;
+  --accent-light:#F0E8E0;
+  --accent-gold:#B89A7A;--accent-gold-light:#F0E8D8;
+  --muted:#6A5A4A;--light:#9A8A7A;
+  --success:#166534;--success-lt:#DCFCE7;
+  --error:#B91C1C;--error-lt:#FEE2E2;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--accent2)}
+.login-box{background:var(--white);padding:56px 48px;width:100%;max-width:440px;position:relative;z-index:10;box-shadow:0 25px 50px -12px rgba(0,0,0,.3);border:1px solid var(--border)}
+.login-logo{margin-bottom:32px}
+.ll-name{font-family:'Literata',serif;font-size:38px;font-weight:500;color:var(--ink);letter-spacing:-0.5px;line-height:1}
+.ll-name span{color:var(--accent);font-style:italic}
+.ll-sub{font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:8px;font-weight:300}
+.login-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:32px;font-weight:500}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.field input{width:100%;padding:14px 18px;border:1.5px solid var(--border);font-size:15px;font-family:'Inter',sans-serif;outline:none;background:var(--bg);color:var(--ink);transition:border-color .2s;position:relative;z-index:1;pointer-events:auto}
+.field input:focus{border-color:var(--accent);background:var(--white)}
+.field input::placeholder{color:var(--light)}
+.login-btn{width:100%;padding:15px;background:var(--accent);color:#fff;border:none;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s;position:relative;z-index:1;pointer-events:auto}
+.login-btn:hover{background:var(--accent2)}
+.login-err{color:var(--error);font-size:13px;margin-top:12px;display:none;font-weight:600;text-align:center}
+.admin-wrap{display:none;min-height:100vh;background:var(--bg)}
+.admin-header{background:var(--white);height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,.02);flex-wrap:wrap;gap:8px}
+.al{display:flex;align-items:center;gap:12px}
+.al-icon{width:40px;height:40px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px}
+.al-name{font-family:'Literata',serif;font-size:26px;font-weight:500;color:var(--ink);letter-spacing:-0.3px}
+.al-name span{color:var(--accent);font-style:italic}
+.admin-nav{display:flex;gap:2px;align-items:center;flex-wrap:wrap}
+.admin-nav button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 16px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.admin-nav button:hover,.admin-nav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.logout-btn{background:transparent;border:none;color:var(--light);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;padding:8px 14px;font-weight:500;transition:color .2s}
+.logout-btn:hover{color:var(--ink)}
+.view-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 16px;text-decoration:none;font-size:12px;font-weight:500;transition:all .2s;margin-left:4px}
+.view-btn:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.admin-body{max-width:1200px;margin:0 auto;padding:32px 28px}
+.panel{display:none}.panel.active{display:block}
+.panel-title{font-family:'Literata',serif;font-size:44px;font-weight:500;color:var(--ink);margin-bottom:24px;letter-spacing:-0.5px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);padding:24px;position:relative;overflow:hidden;transition:all .2s}
+.stat-card:hover{box-shadow:0 12px 24px -8px rgba(0,0,0,.1);border-color:var(--accent-light)}
+.stat-num{font-family:'Literata',serif;font-size:48px;font-weight:500;color:var(--accent);line-height:1;margin-bottom:4px;letter-spacing:-1px}
+.stat-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.dash-welcome{background:var(--accent-light);border:1px solid var(--border);padding:48px;position:relative;overflow:hidden}
+.dash-welcome::after{content:'⚬';font-family:'Literata',serif;font-size:180px;color:var(--accent);position:absolute;right:20px;bottom:-40px;line-height:1;opacity:.2}
+.dw-kicker{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px}
+.dw-title{font-family:'Literata',serif;font-size:42px;font-weight:500;color:var(--ink);margin-bottom:16px;letter-spacing:-0.5px;line-height:1.1}
+.dw-sub{font-size:14px;color:var(--muted);margin-bottom:28px;font-weight:400;max-width:600px}
+.dw-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:14px 32px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;border:none;transition:background .2s}
+.dw-btn:hover{background:var(--accent2)}
+.dw-btn i{font-size:14px}
+.editor-grid{display:grid;grid-template-columns:1fr 280px;gap:20px}
+.editor-main{background:var(--card);border:1px solid var(--border);padding:32px}
+.editor-side{display:flex;flex-direction:column;gap:16px}
+.side-box{background:var(--card);border:1px solid var(--border);padding:22px}
+.side-box h3{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.title-input{font-family:'Literata',serif;font-size:36px;font-weight:500;border:none;background:transparent;padding:0;width:100%;outline:none;margin-bottom:12px;color:var(--ink);letter-spacing:-0.5px;line-height:1.15}
+.title-input::placeholder{color:var(--border2)}
+.title-sep{height:1px;background:var(--border);margin-bottom:3px}
+.title-accent{height:3px;width:60px;background:var(--accent);margin-bottom:24px}
+.form-field{margin-bottom:16px}
+.form-field label{display:block;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.form-field input,.form-field select,.form-field textarea{width:100%;padding:12px 16px;border:1.5px solid var(--border);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;background:var(--bg);color:var(--ink)}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--accent);background:var(--white)}
+#post-content{min-height:380px;resize:vertical;line-height:1.8;font-size:13px;font-weight:300}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar button{background:var(--bg);border:1.5px solid var(--border);padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;color:var(--muted)}
+.toolbar button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.publish-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;margin-bottom:8px;transition:background .2s}
+.publish-btn:hover{background:var(--accent2)}
+.publish-btn i{margin-right:6px}
+.cancel-btn{width:100%;padding:12px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-size:11px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.cancel-btn:hover{border-color:var(--muted);color:var(--ink)}
+.success-msg{background:var(--success-lt);color:var(--success);border:1px solid rgba(22,101,52,.2);padding:12px;font-size:12px;font-weight:600;margin-top:12px;display:none;text-align:center;letter-spacing:1.5px;text-transform:uppercase}
+.posts-table{background:var(--card);border:1px solid var(--border);overflow:hidden}
+.posts-table-header{display:grid;grid-template-columns:1fr 130px 120px 120px;padding:14px 20px;background:var(--bg);color:var(--muted);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.post-row{display:grid;grid-template-columns:1fr 130px 120px 120px;padding:16px 20px;border-bottom:1px solid var(--border);align-items:center;transition:background .15s}
+.post-row:hover{background:var(--bg)}
+.post-row:last-child{border-bottom:none}
+.post-row-title{font-family:'Literata',serif;font-size:18px;font-weight:500;color:var(--ink);margin-bottom:2px;line-height:1.2}
+.post-row-excerpt{font-size:12px;color:var(--light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:370px}
+.post-row-date{font-size:12px;color:var(--muted)}
+.post-row-cat{font-size:9px;background:var(--accent-light);color:var(--accent);padding:4px 10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(158,125,94,.2);display:inline-block}
+.row-actions{display:flex;gap:8px}
+.edit-btn{background:transparent;color:var(--muted);border:1px solid var(--border);padding:6px 12px;font-size:11px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.edit-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.del-btn{background:transparent;color:var(--error);border:1px solid var(--error-lt);padding:6px 12px;font-size:11px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.del-btn:hover{background:var(--error);color:#fff;border-color:var(--error)}
+.empty-posts{text-align:center;padding:80px;color:var(--muted);font-size:14px}
+.preview-box{background:var(--bg);border:1.5px solid var(--border);padding:16px}
+.preview-title-txt{font-family:'Literata',serif;font-size:20px;font-weight:500;color:var(--ink);margin-bottom:6px;line-height:1.2}
+.preview-exc{font-size:12px;color:var(--muted);line-height:1.5}
+.gist-config{background:var(--card);border:1px solid var(--border);padding:32px;max-width:800px;margin:0 auto}
+.gist-field{margin-bottom:24px}
+.gist-field label{display:block;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.gist-field input{width:100%;padding:14px 18px;border:1.5px solid var(--border);font-size:14px;font-family:'Inter',sans-serif}
+.gist-field input:focus{border-color:var(--accent);outline:none}
+.gist-note{background:var(--bg);border-left:3px solid var(--accent);padding:20px;margin:28px 0;font-size:13px;color:var(--muted)}
+.gist-buttons{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.gist-btn{background:var(--accent);color:#fff;border:none;padding:14px 28px;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:background .2s}
+.gist-btn:hover{background:var(--accent2)}
+.gist-btn.secondary{background:var(--bg);color:var(--ink);border:1.5px solid var(--border)}
+.gist-btn.secondary:hover{background:var(--border);color:var(--ink)}
+.gist-status{margin-top:20px;padding:14px;display:none;font-size:13px}
+.gist-status.success{background:var(--success-lt);color:var(--success);border:1px solid rgba(22,101,52,.2);display:block}
+.gist-status.error{background:var(--error-lt);color:var(--error);border:1px solid rgba(185,28,28,.2);display:block}
+@media(max-width:900px){.stats-row{grid-template-columns:1fr 1fr}.editor-grid{grid-template-columns:1fr}.posts-table-header,.post-row{grid-template-columns:1fr 110px 100px}}
+@media(max-width:600px){.admin-header{height:auto;padding:16px}.stats-row{grid-template-columns:1fr 1fr}.admin-body{padding:20px 16px}.posts-table-header,.post-row{grid-template-columns:1fr auto}}
+</style>
+</head>
+<body>
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="ll-name">Wandel<span>Weise</span></div>
+      <div class="ll-sub">WANDEL · WEISHEIT · REFLEXION</div>
+    </div>
+    <div class="login-sub">Redaktion · Admin</div>
+    <div class="field"><label>Passwort</label><input type="password" id="pw-input" placeholder="Passwort eingeben..." onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="login-btn" onclick="doLogin()"><i class="fas fa-feather" style="margin-right:8px"></i>Anmelden</button>
+    <div class="login-err" id="login-err">⚠ Falsches Passwort</div>
+  </div>
+</div>
+<div class="admin-wrap" id="admin-panel">
+  <div class="admin-header">
+    <div class="al">
+      <div class="al-icon"><i class="fas fa-feather"></i></div>
+      <div class="al-name">Wandel<span>Weise</span></div>
+    </div>
+    <div class="admin-nav">
+      <button class="active" onclick="showPanel('dashboard',this)"><i class="fas fa-chart-pie" style="margin-right:6px"></i>Dashboard</button>
+      <button onclick="showPanel('new-post',this)"><i class="fas fa-pen" style="margin-right:6px"></i>Neuer Artikel</button>
+      <button onclick="showPanel('all-posts',this)"><i class="fas fa-list" style="margin-right:6px"></i>Alle Artikel</button>
+      <button onclick="showPanel('gist-config',this)"><i class="fas fa-cog" style="margin-right:6px"></i>Gist Config</button>
+      <a href="index.html" target="_blank" class="view-btn"><i class="fas fa-external-link-alt" style="margin-right:6px"></i>Website</a>
+      <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt" style="margin-right:6px"></i>Abmelden</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <div class="panel active" id="panel-dashboard">
+      <div class="panel-title">Dashboard</div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Artikel gesamt</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-today">0</div><div class="stat-label">Heute publiziert</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-cats">0</div><div class="stat-label">Kategorien</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-words">—</div><div class="stat-label">Ø Wörter</div></div>
+      </div>
+      <div class="dash-welcome">
+        <div class="dw-kicker"><i class="fas fa-leaf" style="margin-right:8px"></i>WandelWeise Redaktion</div>
+        <div class="dw-title">Wandel beginnt mit Weisheit.</div>
+        <div class="dw-sub">Das Magazin für persönlichen Wandel, gesellschaftliche Reflexion und zeitlose Weisheit.</div>
+        <button class="dw-btn" onclick="showPanel('new-post',document.querySelector('.admin-nav button:nth-child(2)'))"><i class="fas fa-pen"></i>Neuen Artikel schreiben</button>
+      </div>
+    </div>
+    <div class="panel" id="panel-new-post">
+      <div class="panel-title" id="editor-mode-title">Neuer Artikel</div>
+      <div class="editor-grid">
+        <div class="editor-main">
+          <input class="title-input" type="text" id="post-title" placeholder="Artikeltitel eingeben...">
+          <div class="title-sep"></div><div class="title-accent"></div>
+          <div class="toolbar">
+            <button onclick="fmt('bold')"><i class="fas fa-bold"></i></button>
+            <button onclick="fmt('italic')"><i class="fas fa-italic"></i></button>
+            <button onclick="wrapTag('h2')">H2</button>
+            <button onclick="wrapTag('h3')">H3</button>
+            <button onclick="wrapTag('blockquote')"><i class="fas fa-quote-right"></i></button>
+            <button onclick="insertLink()"><i class="fas fa-link"></i></button>
+            <button onclick="wrapTag('ul')"><i class="fas fa-list-ul"></i></button>
+            <button onclick="wrapTag('p')"><i class="fas fa-paragraph"></i></button>
+          </div>
+          <div class="form-field"><textarea id="post-content" placeholder="Artikelinhalt hier eingeben... HTML wird unterstützt."></textarea></div>
+        </div>
+        <div class="editor-side">
+          <div class="side-box"><h3>Veröffentlichen</h3>
+            <button class="publish-btn" onclick="publishPost()"><i class="fas fa-check"></i>Veröffentlichen</button>
+            <button class="cancel-btn" onclick="clearEditor()"><i class="fas fa-undo-alt" style="margin-right:6px"></i>Zurücksetzen</button>
+            <div class="success-msg" id="success-msg">✅ VERÖFFENTLICHT</div>
+          </div>
+          <div class="side-box"><h3>Details</h3>
+            <div class="form-field"><label>Kategorie</label>
+              <select id="post-cat">
+                <option>Leben</option><option>Gesellschaft</option><option>Philosophie</option>
+                <option>Psychologie</option><option>Spiritualität</option><option>Kultur</option>
+                <option>Beziehungen</option><option>Achtsamkeit</option><option>Allgemein</option>
+              </select>
+            </div>
+            <div class="form-field"><label>Autor</label><input type="text" id="post-author" value="WandelWeise Redaktion"></div>
+          </div>
+          <div class="side-box"><h3>Vorschau</h3>
+            <div class="preview-box">
+              <div class="preview-title-txt" id="preview-title">Titel...</div>
+              <div class="preview-exc" id="preview-excerpt">Inhalt...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="panel-all-posts">
+      <div class="panel-title">Alle Artikel</div>
+      <div class="posts-table">
+        <div class="posts-table-header"><div>Titel</div><div>Datum</div><div>Kategorie</div><div>Aktionen</div></div>
+        <div id="posts-list"></div>
+      </div>
+    </div>
+    <div class="panel" id="panel-gist-config">
+      <div class="panel-title">Gist Konfiguration</div>
+      <div class="gist-config">
+        <div class="gist-note">
+          <strong><i class="fas fa-code" style="margin-right:8px"></i>Gist ID:</strong> 42ea11087f40fdba423f8eb0f575ac96<br>
+          <strong><i class="fas fa-tag" style="margin-right:8px"></i>Site Name:</strong> wandelweise<br>
+          <small style="display:block;margin-top:8px;color:var(--muted)">Alle Artikel werden mit diesem Site-Namen gekennzeichnet.</small>
+        </div>
+        
+        <div class="gist-field">
+          <label><i class="fas fa-key" style="margin-right:6px"></i>GitHub Token</label>
+          <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        </div>
+        
+        <div class="gist-field">
+          <label><i class="fas fa-user" style="margin-right:6px"></i>GitHub Benutzername</label>
+          <input type="text" id="github-username" value="Hamzamain-spec" placeholder="GitHub Username">
+        </div>
+        
+        <div class="gist-buttons">
+          <button class="gist-btn" onclick="testGistConnection()"><i class="fas fa-plug" style="margin-right:8px"></i>Verbindung testen</button>
+          <button class="gist-btn secondary" onclick="saveGistConfig()"><i class="fas fa-save" style="margin-right:8px"></i>Config speichern</button>
+          <button class="gist-btn secondary" onclick="migrateLocalToGist()"><i class="fas fa-upload" style="margin-right:8px"></i>Lokale migrieren</button>
+        </div>
+        
+        <div id="gist-status" class="gist-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// Constants
+const PASS = 'germanadmin00#hamzauthority1';
+const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+const SITE_NAME = 'wandelweise';
+const CONFIG_KEY = 'gist_config_wandelweise';
+
+let editingId = null;
+let gistConfig = null;
+
+// Load saved config on startup
+try {
+  const saved = localStorage.getItem(CONFIG_KEY);
+  if (saved) {
+    gistConfig = JSON.parse(saved);
+    document.getElementById('github-token').value = gistConfig.token || '';
+    document.getElementById('github-username').value = gistConfig.username || 'Hamzamain-spec';
+  }
+} catch (e) {}
+
+// Login functions
+function doLogin() {
+  if (document.getElementById('pw-input').value === PASS) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    loadDashboard();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+  }
+}
+
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('pw-input').value = '';
+}
+
+function showPanel(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  
+  if (name === 'all-posts') loadPostsList();
+  if (name === 'dashboard') loadDashboard();
+  if (name === 'new-post') {
+    editingId = null;
+    clearEditor();
+  }
+  if (name === 'gist-config') {
+    document.getElementById('github-token').value = gistConfig?.token || '';
+    document.getElementById('github-username').value = gistConfig?.username || 'Hamzamain-spec';
+  }
+}
+
+// Gist API Functions
+async function getPostsFromGist() {
+  const rawUrl = `https://gist.githubusercontent.com/Hamzamain-spec/${GIST_ID}/raw/posts.json`;
+  try {
+    const response = await fetch(rawUrl);
+    if (!response.ok) return [];
+    const data = await response.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.error('Error fetching from Gist:', e);
+    return [];
+  }
+}
+
+async function savePostsToGist(posts) {
+  if (!gistConfig?.token) {
+    showGistStatus('Bitte zuerst GitHub Token speichern', 'error');
+    return false;
+  }
+
+  // First get the current gist to get the file SHA
+  const gistResponse = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+    headers: {
+      'Authorization': `token ${gistConfig.token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  });
+
+  if (!gistResponse.ok) {
+    showGistStatus('Fehler beim Abrufen der Gist-Info', 'error');
+    return false;
+  }
+
+  const gistData = await gistResponse.json();
+  const currentFile = gistData.files['posts.json'];
+  const sha = currentFile ? currentFile.sha : null;
+
+  // Update the gist
+  const updateResponse = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `token ${gistConfig.token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      files: {
+        'posts.json': {
+          content: JSON.stringify(posts, null, 2),
+          ...(sha && { sha })
+        }
+      }
+    })
+  });
+
+  if (updateResponse.ok) {
+    showGistStatus('✅ Erfolgreich zu Gist gespeichert!', 'success');
+    return true;
+  } else {
+    const error = await updateResponse.json();
+    showGistStatus(`Fehler: ${error.message || 'Unbekannter Fehler'}`, 'error');
+    return false;
+  }
+}
+
+function showGistStatus(message, type) {
+  const statusDiv = document.getElementById('gist-status');
+  statusDiv.textContent = message;
+  statusDiv.className = `gist-status ${type}`;
+  setTimeout(() => {
+    statusDiv.style.display = 'none';
+  }, 5000);
+}
+
+async function testGistConnection() {
+  const token = document.getElementById('github-token').value;
+  const username = document.getElementById('github-username').value;
+  
+  if (!token) {
+    showGistStatus('Bitte GitHub Token eingeben', 'error');
+    return;
+  }
+
+  try {
+    const response = await fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+
+    if (response.ok) {
+      const user = await response.json();
+      showGistStatus(`✅ Verbunden als ${user.login}`, 'success');
+    } else {
+      showGistStatus('❌ Ungültiger Token', 'error');
+    }
+  } catch (e) {
+    showGistStatus('❌ Verbindungsfehler', 'error');
+  }
+}
+
+function saveGistConfig() {
+  const token = document.getElementById('github-token').value;
+  const username = document.getElementById('github-username').value;
+  
+  gistConfig = { token, username };
+  localStorage.setItem(CONFIG_KEY, JSON.stringify(gistConfig));
+  showGistStatus('✅ Konfiguration gespeichert', 'success');
+}
+
+async function migrateLocalToGist() {
+  const localPosts = getLocalPosts();
+  if (!localPosts.length) {
+    showGistStatus('Keine lokalen Artikel zum Migrieren', 'error');
+    return;
+  }
+
+  // Add site name to local posts
+  const postsWithSite = localPosts.map(post => ({
+    ...post,
+    site: SITE_NAME
+  }));
+
+  const gistPosts = await getPostsFromGist();
+  
+  // Filter out any existing posts from this site (to avoid duplicates)
+  const otherPosts = gistPosts.filter(p => p.site !== SITE_NAME);
+  
+  // Combine and save
+  const allPosts = [...otherPosts, ...postsWithSite];
+  const success = await savePostsToGist(allPosts);
+  
+  if (success) {
+    showGistStatus(`✅ ${localPosts.length} Artikel migriert`, 'success');
+  }
+}
+
+// Post management functions (modified for Gist)
+async function getPosts() {
+  const gistPosts = await getPostsFromGist();
+  return gistPosts.filter(p => p.site === SITE_NAME);
+}
+
+function getLocalPosts() {
+  return JSON.parse(localStorage.getItem('db_posts') || '[]');
+}
+
+async function savePosts(posts) {
+  // First add site name to all posts
+  const postsWithSite = posts.map(post => ({
+    ...post,
+    site: SITE_NAME
+  }));
+
+  // Get current all posts from gist
+  const allGistPosts = await getPostsFromGist();
+  
+  // Remove this site's posts and add the new ones
+  const otherPosts = allGistPosts.filter(p => p.site !== SITE_NAME);
+  const updatedAllPosts = [...otherPosts, ...postsWithSite];
+  
+  return await savePostsToGist(updatedAllPosts);
+}
+
+async function publishPost() {
+  const title = document.getElementById('post-title').value.trim();
+  const content = document.getElementById('post-content').value.trim();
+  
+  if (!title || !content) {
+    alert('Bitte Titel und Inhalt eingeben!');
+    return;
+  }
+
+  const posts = await getPosts();
+  
+  if (editingId) {
+    const idx = posts.findIndex(p => p.id == editingId);
+    if (idx > -1) {
+      posts[idx].title = title;
+      posts[idx].content = content;
+      posts[idx].category = document.getElementById('post-cat').value;
+      posts[idx].author = document.getElementById('post-author').value;
+    }
+  } else {
+    posts.push({
+      id: Date.now(),
+      title,
+      content,
+      category: document.getElementById('post-cat').value,
+      author: document.getElementById('post-author').value || 'Redaktion',
+      date: new Date().toISOString(),
+      site: SITE_NAME
+    });
+  }
+
+  const success = await savePosts(posts);
+  
+  if (success) {
+    const msg = document.getElementById('success-msg');
+    msg.textContent = editingId ? '✅ AKTUALISIERT' : '✅ VERÖFFENTLICHT';
+    msg.style.display = 'block';
+    setTimeout(() => {
+      msg.style.display = 'none';
+      clearEditor();
+    }, 2000);
+    editingId = null;
+  }
+}
+
+function clearEditor() {
+  document.getElementById('post-title').value = '';
+  document.getElementById('post-content').value = '';
+  document.getElementById('post-cat').value = 'Leben';
+  document.getElementById('post-author').value = 'WandelWeise Redaktion';
+  document.getElementById('preview-title').textContent = 'Titel...';
+  document.getElementById('preview-excerpt').textContent = 'Inhalt...';
+  document.getElementById('editor-mode-title').textContent = 'Neuer Artikel';
+  editingId = null;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('post-title').addEventListener('input', e => {
+    document.getElementById('preview-title').textContent = e.target.value || 'Titel...';
+  });
+  document.getElementById('post-content').addEventListener('input', e => {
+    const t = e.target.value.replace(/<[^>]+>/g, '').substring(0, 90);
+    document.getElementById('preview-excerpt').textContent = t ? t + '...' : 'Inhalt...';
+  });
+});
+
+function fmt(cmd) {
+  const ta = document.getElementById('post-content');
+  const s = ta.selectionStart;
+  const e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e) || 'Text';
+  const tag = cmd === 'bold' ? 'strong' : 'em';
+  ta.value = ta.value.substring(0, s) + `<${tag}>${sel}</${tag}>` + ta.value.substring(e);
+}
+
+function wrapTag(tag) {
+  const ta = document.getElementById('post-content');
+  const s = ta.selectionStart;
+  const e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e) || 'Text hier';
+  const w = tag === 'ul' ? `<ul>\n  <li>${sel}</li>\n</ul>` : `<${tag}>${sel}</${tag}>`;
+  ta.value = ta.value.substring(0, s) + w + ta.value.substring(e);
+}
+
+function insertLink() {
+  const url = prompt('URL:');
+  if (!url) return;
+  const ta = document.getElementById('post-content');
+  const s = ta.selectionStart;
+  const e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e) || 'Linktext';
+  ta.value = ta.value.substring(0, s) + `<a href="${url}">${sel}</a>` + ta.value.substring(e);
+}
+
+async function loadPostsList() {
+  const posts = await getPosts();
+  const el = document.getElementById('posts-list');
+  
+  if (!posts.length) {
+    el.innerHTML = '<div class="empty-posts">Noch keine Artikel vorhanden.</div>';
+    return;
+  }
+
+  el.innerHTML = posts.slice().reverse().map(p => {
+    const date = new Date(p.date).toLocaleDateString('de-DE');
+    const excerpt = p.content.replace(/<[^>]+>/g, '').substring(0, 55);
+    return `<div class="post-row">
+      <div>
+        <div class="post-row-title">${p.title}</div>
+        <div class="post-row-excerpt">${excerpt}...</div>
+      </div>
+      <div class="post-row-date">${date}</div>
+      <div><span class="post-row-cat">${p.category || 'Allgemein'}</span></div>
+      <div class="row-actions">
+        <button class="edit-btn" onclick="editPost(${p.id})"><i class="fas fa-edit" style="margin-right:4px"></i>Edit</button>
+        <button class="del-btn" onclick="deletePost(${p.id})"><i class="fas fa-trash-alt" style="margin-right:4px"></i>Del</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function editPost(id) {
+  const posts = await getPosts();
+  const post = posts.find(p => p.id == id);
+  if (!post) return;
+  
+  editingId = id;
+  document.getElementById('post-title').value = post.title;
+  document.getElementById('post-content').value = post.content;
+  document.getElementById('post-cat').value = post.category || 'Leben';
+  document.getElementById('post-author').value = post.author || 'Redaktion';
+  document.getElementById('editor-mode-title').textContent = 'Artikel bearbeiten';
+  document.getElementById('preview-title').textContent = post.title;
+  showPanel('new-post', document.querySelector('.admin-nav button:nth-child(2)'));
+}
+
+async function deletePost(id) {
+  if (!confirm('Löschen?')) return;
+  
+  const posts = await getPosts();
+  const updatedPosts = posts.filter(p => p.id != id);
+  await savePosts(updatedPosts);
+  loadPostsList();
+  loadDashboard();
+}
+
+async function loadDashboard() {
+  const posts = await getPosts();
+  
+  document.getElementById('stat-total').textContent = posts.length;
+  
+  const today = new Date().toDateString();
+  document.getElementById('stat-today').textContent = posts.filter(p => 
+    new Date(p.date).toDateString() === today
+  ).length;
+  
+  document.getElementById('stat-cats').textContent = new Set(posts.map(p => p.category)).size;
+  
+  if (posts.length) {
+    const avg = Math.round(posts.reduce((a, p) => 
+      a + p.content.replace(/<[^>]+>/g, '').split(' ').length, 0
+    ) / posts.length);
+    document.getElementById('stat-words').textContent = avg;
+  }
+}
+</script>
+</body>
+</html>
