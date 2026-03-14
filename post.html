@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artikel — WandelWeise</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;7..72,400;7..72,500;7..72,600;7..72,700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F8F5F0;--white:#FFFFFF;--card:#FFFFFF;
+  --ink:#2A2A2A;--mid:#3A3A3A;
+  --border:#E0D8D0;--border2:#C8C0B8;
+  --accent:#9E7D5E;--accent2:#7E5E42;
+  --accent-light:#F0E8E0;
+  --accent-gold:#B89A7A;
+  --muted:#6A5A4A;--light:#9A8A7A;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.hdr-inner{max-width:1340px;margin:0 auto;padding:0 32px;height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo-name{font-family:'Literata',serif;font-size:24px;font-weight:500;color:var(--ink);letter-spacing:-0.3px}
+.logo-name span{color:var(--accent);font-style:italic}
+nav a{padding:6px 16px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--accent)}
+nav a i{margin-right:6px}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--muted)}
+.mobile-nav{display:none;background:var(--white);border-top:1px solid var(--border);padding:16px 32px;flex-direction:column}
+.mobile-nav a{display:block;padding:12px 0;color:var(--muted);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border)}
+.mobile-nav a:hover{color:var(--accent)}
+.mobile-nav.open{display:flex}
+
+/* HERO */
+.post-hero{background:var(--white);border-bottom:1px solid var(--border)}
+.ph-inner{max-width:1340px;margin:0 auto;padding:48px 32px;display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:center}
+.ph-breadcrumb{font-size:11px;color:var(--light);margin-bottom:16px;display:flex;gap:6px;flex-wrap:wrap}
+.ph-breadcrumb a{color:var(--light);text-decoration:none;transition:color .2s}
+.ph-breadcrumb a:hover{color:var(--accent)}
+.ph-cat{display:inline-block;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;margin-bottom:16px}
+.ph-title{font-family:'Literata',serif;font-size:52px;font-weight:500;color:var(--ink);line-height:.95;margin-bottom:24px;letter-spacing:-1px}
+.ph-meta{display:flex;align-items:center;gap:20px;font-size:13px;color:var(--light);padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap}
+.ph-av{width:44px;height:44px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--accent)}
+.ph-meta strong{color:var(--accent);font-weight:600}
+.ph-meta i{margin-right:6px;color:var(--accent)}
+.ph-visual{background:var(--accent-light);border:1px solid var(--border);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:32px}
+.ph-vis-icon{font-size:80px;color:var(--accent);opacity:.3}
+.ph-vis-label{font-size:14px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--accent2);margin-top:16px}
+.ph-vis-line{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--accent)}
+
+/* LAYOUT */
+.layout{max-width:1240px;margin:48px auto;padding:0 32px;display:grid;grid-template-columns:1fr 280px;gap:48px}
+.main-col{background:var(--white);border:1px solid var(--border);padding:52px 56px}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--border);color:var(--muted);text-decoration:none;font-size:11px;font-weight:500;padding:10px 22px;margin-bottom:40px;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.back-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.back-btn i{font-size:12px}
+.article-body{font-size:18px;line-height:1.9;color:var(--mid);font-weight:300}
+.article-body p{margin-bottom:28px}
+.article-body h2{font-family:'Literata',serif;font-size:34px;font-weight:500;color:var(--ink);margin:56px 0 20px;letter-spacing:-0.5px;border-bottom:1px solid var(--border);padding-bottom:16px}
+.article-body h3{font-family:'Literata',serif;font-size:24px;font-weight:500;color:var(--ink);margin:36px 0 16px}
+.article-body a{color:var(--accent);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(158,125,94,.3);transition:all .2s}
+.article-body a:hover{color:var(--ink);border-color:var(--ink)}
+.article-body ul,.article-body ol{padding-left:28px;margin-bottom:24px}
+.article-body li{margin-bottom:10px;line-height:1.8}
+.article-body strong{font-weight:600;color:var(--ink)}
+blockquote{background:var(--bg);border-left:3px solid var(--accent);padding:28px 32px;margin:40px 0}
+blockquote p{font-family:'Literata',serif;font-size:22px;color:var(--ink);line-height:1.5;font-style:italic;margin-bottom:0}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:24px}
+.widget{background:var(--white);border:1px solid var(--border)}
+.wh{padding:16px 20px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:10px}
+.wh i{color:var(--accent);width:20px}
+.wh-title{font-family:'Literata',serif;font-size:18px;font-weight:500;color:var(--ink)}
+.wb{padding:20px}
+.wi{padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .2s}
+.wi:last-child{border-bottom:none;padding-bottom:0}
+.wi:hover{padding-left:5px}
+.wi-cat{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.wi-title{font-family:'Literata',serif;font-size:17px;font-weight:500;color:var(--ink);line-height:1.2;text-decoration:none;display:block;margin-bottom:4px}
+.wi-title:hover{color:var(--accent)}
+.wi-meta{font-size:10px;color:var(--light)}
+.wi-meta i{margin-right:4px;font-size:9px}
+.about-box{background:var(--bg);border:1px solid var(--border);padding:28px}
+.ab-title{font-family:'Literata',serif;font-size:22px;font-weight:500;color:var(--ink);margin-bottom:12px;letter-spacing:-0.3px}
+.ab-text{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;font-style:italic}
+.ab-link{color:var(--accent);font-weight:600;font-size:12px;text-decoration:none;text-transform:uppercase;letter-spacing:1px}
+.ab-link i{margin-left:6px}
+.not-found{text-align:center;padding:80px;color:var(--muted);grid-column:1/-1}
+footer{background:var(--mid);margin-top:60px;border-top:3px solid var(--accent);text-align:center;padding:24px;font-size:12px;color:rgba(255,255,255,.3)}
+footer a{color:rgba(255,255,255,.3);text-decoration:none;margin:0 10px;transition:color .2s}
+footer a:hover{color:#fff}
+.fl{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:5px}
+.fl-icon{width:36px;height:36px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff}
+.fl-name{font-family:'Literata',serif;font-size:24px;color:#fff;font-weight:500}
+.fl-name span{color:var(--accent);font-style:italic}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .layout{grid-template-columns:1fr}.sidebar{display:none}.ph-inner{grid-template-columns:1fr;gap:24px}.ph-visual{display:none}
+}
+@media(max-width:768px){
+  .ph-inner{padding:32px 20px}.ph-title{font-size:38px}.main-col{padding:36px 24px}.hdr-inner nav{display:none}.hamburger{display:flex}.hdr-inner{padding:0 20px}
+}
+@media(max-width:480px){
+  .ph-title{font-size:28px}.main-col{padding:24px 16px}.article-body{font-size:16px}.layout{padding:0 16px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-inner">
+    <a href="index.html" class="logo"><span class="logo-name">Wandel<span>Weise</span></span></a>
+    <nav>
+      <a href="index.html"><i class="fas fa-arrow-left"></i> Start</a>
+      <a href="index.html">Leben</a>
+      <a href="index.html">Gesellschaft</a>
+      <a href="index.html">Philosophie</a>
+    </nav>
+    <button class="hamburger" onclick="document.getElementById('mn').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-nav" id="mn">
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Alle Artikel</a>
+    <a href="index.html">Leben</a>
+    <a href="index.html">Gesellschaft</a>
+    <a href="index.html">Philosophie</a>
+    <a href="index.html">Psychologie</a>
+  </div>
+</header>
+
+<div id="post-hero" class="post-hero" style="display:none">
+  <div class="ph-inner">
+    <div>
+      <div class="ph-breadcrumb">
+        <a href="index.html"><i class="fas fa-home"></i> Start</a>
+        <span>/</span>
+        <span id="ph-cat-bc">Allgemein</span>
+      </div>
+      <div class="ph-cat" id="ph-cat">Allgemein</div>
+      <div class="ph-title" id="ph-title"></div>
+      <div class="ph-meta">
+        <div class="ph-av" id="ph-av"><i class="fas fa-feather"></i></div>
+        <strong id="ph-author">Redaktion</strong>
+        <span>·</span>
+        <span><i class="fas fa-calendar-alt"></i> <span id="ph-date"></span></span>
+        <span>·</span>
+        <span><i class="fas fa-clock"></i> <span id="ph-read">5 Min.</span></span>
+      </div>
+    </div>
+    <div class="ph-visual">
+      <div class="ph-vis-icon"><i class="fas fa-leaf"></i></div>
+      <div class="ph-vis-label" id="ph-vis-label">WandelWeise</div>
+      <div class="ph-vis-line"></div>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="main-col">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Alle Beiträge</a>
+    <div id="article-body" class="article-body"></div>
+    <div id="not-found" class="not-found" style="display:none"><h2 style="font-family:'Literata',serif;font-size:34px;font-weight:500">Artikel nicht gefunden.</h2></div>
+  </div>
+  <aside class="sidebar">
+    <div class="about-box">
+      <div class="ab-title">WandelWeise</div>
+      <div class="ab-text">Magazin für Wandel & Weisheit – Reflexionen über Leben, Gesellschaft und die Kunst des Wandels.</div>
+      <a href="#" class="ab-link">Mehr <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="widget">
+      <div class="wh"><i class="fas fa-clock"></i><div class="wh-title">Weitere Gedanken</div></div>
+      <div class="wb" id="recent-posts"></div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="fl"><span class="fl-icon"><i class="fas fa-feather"></i></span><span class="fl-name">Wandel<span>Weise</span></span></div>
+  <p>&copy; 2026 WandelWeise &nbsp;|&nbsp;<a href="#">Impressum</a>&nbsp;|&nbsp;<a href="#">Datenschutz</a></p>
+</footer>
+
+<script>
+// Constants
+const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+const SITE_NAME = 'wandelweise';
+const RAW_URL = `https://gist.githubusercontent.com/Hamzamain-spec/${GIST_ID}/raw/posts.json`;
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get('id');
+
+async function loadPost() {
+  try {
+    console.log('Loading post with ID:', id);
+    
+    const response = await fetch(RAW_URL);
+    const allPosts = await response.json();
+    console.log('Total posts in Gist:', allPosts.length);
+    
+    // Filter posts by site name
+    const sitePosts = Array.isArray(allPosts) 
+      ? allPosts.filter(p => p.site === SITE_NAME)
+      : [];
+    console.log(`Posts for site "${SITE_NAME}":`, sitePosts.length);
+    
+    const post = sitePosts.find(p => p.id == id);
+    
+    if (post) {
+      console.log('Post found:', post.title);
+      document.title = post.title + ' — WandelWeise';
+      document.getElementById('ph-title').textContent = post.title;
+      document.getElementById('ph-cat').textContent = post.category || 'Allgemein';
+      document.getElementById('ph-cat-bc').textContent = post.category || 'Allgemein';
+      document.getElementById('ph-vis-label').textContent = post.category || 'WandelWeise';
+      document.getElementById('ph-author').textContent = post.author || 'Redaktion';
+      document.getElementById('ph-av').innerHTML = '<i class="fas fa-feather"></i>';
+      document.getElementById('ph-date').textContent = new Date(post.date).toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+      
+      const w = post.content.replace(/<[^>]+>/g, '').split(' ').length;
+      document.getElementById('ph-read').textContent = Math.max(1, Math.round(w / 200)) + ' Min. Lesezeit';
+      document.getElementById('article-body').innerHTML = post.content;
+      document.getElementById('post-hero').style.display = 'block';
+      
+      // Recent posts (excluding current)
+      const rp = document.getElementById('recent-posts');
+      rp.innerHTML = '';
+      sitePosts.slice().reverse().slice(0, 6).forEach(p => {
+        if (p.id == id) return;
+        rp.innerHTML += `<div class="wi" onclick="location.href='post.html?id=${p.id}'">
+          <div class="wi-cat">${p.category || 'Allgemein'}</div>
+          <a class="wi-title" href="post.html?id=${p.id}">${p.title}</a>
+          <div class="wi-meta"><i class="fas fa-user"></i> ${p.author || 'Redaktion'} · <i class="fas fa-calendar-alt"></i> ${new Date(p.date).toLocaleDateString('de-DE')}</div>
+        </div>`;
+      });
+    } else {
+      console.log('Post not found. Available IDs:', sitePosts.map(p => p.id));
+      document.getElementById('not-found').style.display = 'block';
+    }
+  } catch (e) {
+    console.error('Error loading post:', e);
+    document.getElementById('not-found').style.display = 'block';
+  }
+}
+
+// Load the post
+loadPost();
+</script>
+</body>
+</html>
