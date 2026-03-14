@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WandelWeise — Magazin für Wandel & Weisheit</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;7..72,400;7..72,500;7..72,600;7..72,700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F8F5F0;--white:#FFFFFF;--card:#FFFFFF;
+  --ink:#2A2A2A;--mid:#3A3A3A;
+  --border:#E0D8D0;--border2:#C8C0B8;
+  --accent:#9E7D5E;--accent2:#7E5E42;
+  --accent-light:#F0E8E0;
+  --accent-gold:#B89A7A;--accent-gold-light:#F0E8D8;
+  --muted:#6A5A4A;--light:#9A8A7A;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+/* WISDOM BAR */
+.wisdom-bar{background:var(--accent);color:#fff;padding:8px 0;font-size:13px}
+.wb-inner{max-width:1340px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.wb-left i{margin-right:8px;opacity:.8}
+.wb-left{font-style:italic;font-weight:300}
+.wb-right{display:flex;gap:24px}
+.wb-right a{color:rgba(255,255,255,.7);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+.wb-right a:hover{color:#fff}
+.wb-right i{margin-right:6px}
+
+/* HEADER */
+header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.hdr{max-width:1340px;margin:0 auto;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo{text-decoration:none}
+.logo-name{font-family:'Literata',serif;font-size:40px;font-weight:500;color:var(--ink);letter-spacing:-1px;line-height:1}
+.logo-name span{color:var(--accent);font-style:italic}
+.logo-sub{font-size:10px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-top:8px;font-weight:300}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.hdr-search{position:relative}
+.hdr-search input{padding:10px 18px;padding-right:40px;border:1px solid var(--border);font-size:13px;width:220px;background:var(--bg);font-family:'Inter',sans-serif}
+.hdr-search input:focus{outline:1px solid var(--accent);background:var(--white)}
+.hdr-search i{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--light)}
+.hdr-cta{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:10px 20px;font-size:12px;font-weight:500;letter-spacing:1px;text-decoration:none;transition:all .2s}
+.hdr-cta:hover{background:var(--accent);color:#fff}
+.hdr-cta i{margin-right:8px}
+.hamburger{display:none;flex-direction:column;gap:6px;cursor:pointer;background:none;border:none;padding:8px}
+.hamburger span{display:block;width:26px;height:2px;background:var(--ink)}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1340px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-links{display:flex}
+.nav-links a{padding:14px 20px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.5px;transition:color .2s;border-right:1px solid var(--border)}
+.nav-links a:last-child{border-right:none}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a.active{color:var(--accent);font-weight:600}
+.nav-icon{display:flex;gap:16px}
+.nav-icon a{color:var(--light);font-size:16px;transition:color .2s}
+.nav-icon a:hover{color:var(--accent)}
+.mobile-nav{display:none;background:var(--white);border-top:1px solid var(--border);padding:16px 32px;flex-direction:column}
+.mobile-nav a{display:block;padding:12px 0;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;border-bottom:1px solid var(--border)}
+.mobile-nav a:hover{color:var(--accent)}
+.mobile-nav.open{display:flex}
+
+/* HERO REFLECTION */
+.hero{max-width:1340px;margin:40px auto 0;padding:0 32px;display:grid;grid-template-columns:1.3fr 0.7fr;gap:24px}
+.hero-feature{background:var(--white);border:1px solid var(--border);cursor:pointer;transition:all .3s;position:relative}
+.hero-feature:hover{box-shadow:0 20px 30px -10px rgba(0,0,0,.1);border-color:var(--accent-light)}
+.hero-feature-img{height:260px;background:var(--accent-light);position:relative;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.hfi-icon{font-size:64px;color:var(--accent);opacity:.2}
+.hfi-label{position:absolute;bottom:20px;left:20px;background:var(--accent);color:#fff;padding:6px 16px;font-size:11px;font-weight:600;letter-spacing:1px}
+.hero-feature-body{padding:32px}
+.hero-cat{display:inline-block;color:var(--accent);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.hero-title{font-family:'Literata',serif;font-size:40px;font-weight:500;color:var(--ink);line-height:1.1;margin-bottom:16px;letter-spacing:-0.5px}
+.hero-excerpt{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:24px}
+.hero-meta{display:flex;align-items:center;gap:20px;font-size:12px;color:var(--light);padding-top:16px;border-top:1px solid var(--border)}
+.hero-meta strong{color:var(--accent);font-weight:600}
+.hero-meta i{margin-right:4px;color:var(--accent)}
+.hero-side{display:flex;flex-direction:column;gap:12px}
+.hs-item{background:var(--white);border:1px solid var(--border);padding:24px;cursor:pointer;transition:all .2s}
+.hs-item:hover{background:var(--bg);border-color:var(--accent-light);padding-left:28px}
+.hs-item:first-child{border-left:3px solid var(--accent)}
+.hsi-cat{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.hsi-title{font-family:'Literata',serif;font-size:20px;font-weight:500;color:var(--ink);line-height:1.25;margin-bottom:8px}
+.hsi-meta{font-size:11px;color:var(--light)}
+.hsi-meta i{margin-right:4px;font-size:10px}
+.hero-empty{max-width:1340px;margin:40px auto 0;padding:0 32px;display:none}
+.hero-empty-inner{background:var(--white);border:2px dashed var(--border2);padding:80px;text-align:center}
+.hero-empty-inner h3{font-family:'Literata',serif;font-size:34px;font-weight:500;color:var(--ink);margin-bottom:12px}
+.hero-empty-inner p{color:var(--muted);font-size:15px}
+
+/* REFLECTION LINE */
+.reflection-line{background:var(--accent-light);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;margin-top:40px}
+.rl-inner{max-width:1340px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;overflow-x:auto;gap:30px}
+.rl-item{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:400;white-space:nowrap;font-style:italic}
+.rl-item i{color:var(--accent);font-size:12px}
+.rl-item span{background:var(--accent);color:#fff;padding:2px 8px;font-size:10px;font-weight:600;letter-spacing:1px;font-style:normal}
+
+/* MAIN LAYOUT */
+.main{max-width:1340px;margin:48px auto;padding:0 32px;display:grid;grid-template-columns:1fr 300px;gap:48px}
+.sec-hd{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.sec-hd-icon{width:32px;height:32px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.sec-hd-title{font-family:'Literata',serif;font-size:24px;font-weight:500;color:var(--ink);letter-spacing:-0.3px}
+.sec-hd-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+.sec-hd-count{font-size:12px;color:var(--light);font-weight:400}
+
+/* POST CARDS (REFLECTIVE STYLE) */
+.posts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.post-card{background:var(--white);border:1px solid var(--border);cursor:pointer;transition:all .2s;position:relative}
+.post-card:hover{box-shadow:0 15px 25px -10px rgba(0,0,0,.1);border-color:var(--accent-light)}
+.post-card-img{height:160px;background:var(--accent-light);position:relative;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.pci-icon{font-size:48px;color:var(--accent);opacity:.2}
+.pci-cat{position:absolute;top:14px;left:14px;background:var(--accent);color:#fff;padding:4px 12px;font-size:9px;font-weight:600;letter-spacing:1px}
+.post-card-body{padding:22px}
+.pc-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:11px;color:var(--light)}
+.pc-meta i{margin-right:4px;color:var(--accent);font-size:10px}
+.pc-title{font-family:'Literata',serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:10px;transition:color .2s}
+.post-card:hover .pc-title{color:var(--accent)}
+.pc-exc{font-size:12px;line-height:1.65;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:16px;font-style:italic}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border)}
+.pc-author{font-size:11px;font-weight:400;color:var(--light)}
+.pc-author i{margin-right:4px;color:var(--accent)}
+.pc-read{font-size:11px;font-weight:600;color:var(--accent);text-decoration:none;letter-spacing:1px;text-transform:uppercase}
+.pc-read i{margin-left:6px;transition:margin .2s}
+.post-card:hover .pc-read i{margin-left:10px}
+.empty-state{text-align:center;padding:80px;background:var(--white);border:1px solid var(--border);grid-column:1/-1}
+.empty-state h3{font-family:'Literata',serif;font-size:30px;font-weight:500;color:var(--ink);margin-bottom:8px}
+.empty-state p{color:var(--muted);font-size:14px}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:24px}
+.widget{background:var(--white);border:1px solid var(--border)}
+.w-hd{padding:16px 20px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:10px}
+.w-hd i{color:var(--accent);width:20px}
+.w-hd-title{font-family:'Literata',serif;font-size:18px;font-weight:500;color:var(--ink)}
+.w-body{padding:20px}
+.wi{padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .2s}
+.wi:last-child{border-bottom:none;padding-bottom:0}
+.wi:hover{padding-left:5px}
+.wi-cat{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.wi-title{font-family:'Literata',serif;font-size:17px;font-weight:500;color:var(--ink);line-height:1.2;text-decoration:none;display:block;margin-bottom:4px}
+.wi-title:hover{color:var(--accent)}
+.wi-meta{font-size:10px;color:var(--light)}
+.wi-meta i{margin-right:4px;font-size:9px}
+.about-box{background:var(--bg);border:1px solid var(--border);padding:28px}
+.ab-title{font-family:'Literata',serif;font-size:24px;font-weight:500;color:var(--ink);margin-bottom:12px;letter-spacing:-0.3px}
+.ab-text{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;font-style:italic}
+.ab-link{display:inline-block;color:var(--accent);font-weight:600;font-size:12px;text-decoration:none;text-transform:uppercase;letter-spacing:1px}
+.ab-link i{margin-left:6px;transition:margin .2s}
+.ab-link:hover i{margin-left:10px}
+.cat-list{list-style:none}
+.cat-list li{margin-bottom:12px}
+.cat-list a{display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:13px;transition:color .2s;border-bottom:1px dotted var(--border);padding-bottom:8px}
+.cat-list a:hover{color:var(--accent)}
+.cat-list i{color:var(--accent);font-size:10px}
+
+/* FOOTER */
+footer{background:var(--mid);margin-top:60px;border-top:3px solid var(--accent)}
+.footer-inner{max-width:1340px;margin:0 auto;padding:60px 32px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.fl-logo{margin-bottom:20px}
+.fl-name{font-family:'Literata',serif;font-size:30px;color:#fff;letter-spacing:-0.5px;line-height:1;font-weight:500}
+.fl-name span{color:var(--accent);font-style:italic}
+.fl-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:3px;text-transform:uppercase;margin-top:8px}
+.fb-text{font-size:13px;line-height:1.8;color:rgba(255,255,255,.5);font-weight:300;max-width:300px}
+.fc h4{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.fc a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;margin-bottom:12px;transition:color .2s}
+.fc a:hover{color:#fff}
+.fc i{margin-right:8px;font-size:12px;color:var(--accent)}
+.footer-btm{border-top:1px solid rgba(255,255,255,.1);max-width:1340px;margin:0 auto;padding:16px 32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11px;color:rgba(255,255,255,.3)}
+.footer-btm a{color:rgba(255,255,255,.3);text-decoration:none;margin-left:14px;transition:color .2s}
+.footer-btm a:hover{color:#fff}
+.admin-link{position:fixed;bottom:24px;right:24px;background:var(--accent);color:#fff;width:48px;height:48px;display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:0;transition:opacity .3s;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+body:hover .admin-link{opacity:.7}
+.admin-link:hover{opacity:1!important}
+.admin-link i{font-size:18px}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr}
+  .hero-side{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .main{grid-template-columns:1fr}
+  .sidebar{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:30px}
+}
+@media(max-width:768px){
+  .hdr-right{display:none}
+  .hamburger{display:flex}
+  .nav-links,.nav-icon{display:none}
+  .hero-side{grid-template-columns:1fr}
+  .posts-grid{grid-template-columns:1fr}
+  .sidebar{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:24px}
+  .hero-title{font-size:32px}
+  .hdr{padding:16px 20px}
+  .main{padding:0 20px}
+}
+@media(max-width:480px){
+  .wisdom-bar{display:none}
+  .logo-name{font-size:32px}
+  .hero{padding:0 16px}
+  .main{padding:0 16px}
+  .hero-feature-body{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="wisdom-bar">
+  <div class="wb-inner">
+    <div class="wb-left"><i class="fas fa-quote-left"></i> Alles fließt, nichts bleibt. — Heraklit</div>
+    <div class="wb-right">
+      <a href="#"><i class="fas fa-envelope"></i>Newsletter</a>
+      <a href="#"><i class="fas fa-archive"></i>Archiv</a>
+      <a href="#"><i class="fas fa-info-circle"></i>Impressum</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="hdr">
+    <a href="index.html" class="logo">
+      <div class="logo-name">Wandel<span>Weise</span></div>
+      <div class="logo-sub">WANDEL · WEISHEIT · REFLEXION</div>
+    </a>
+    <div class="hdr-right">
+      <div class="hdr-search">
+        <input type="text" placeholder="Suchen...">
+        <i class="fas fa-search"></i>
+      </div>
+      <a href="admin.html" class="hdr-cta"><i class="fas fa-pen"></i>Schreiben</a>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="index.html" class="active">Start</a>
+      <a href="index.html">Leben</a>
+      <a href="index.html">Gesellschaft</a>
+      <a href="index.html">Philosophie</a>
+      <a href="index.html">Psychologie</a>
+      <a href="index.html">Spiritualität</a>
+      <a href="index.html">Kultur</a>
+      <a href="index.html">Beziehungen</a>
+    </div>
+    <div class="nav-icon">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-threads"></i></a>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html">Start</a>
+    <a href="index.html">Leben</a>
+    <a href="index.html">Gesellschaft</a>
+    <a href="index.html">Philosophie</a>
+    <a href="index.html">Psychologie</a>
+    <a href="index.html">Spiritualität</a>
+    <a href="index.html">Kultur</a>
+    <a href="index.html">Beziehungen</a>
+  </div>
+</nav>
+
+<div id="hero-section" class="hero" style="display:none">
+  <div class="hero-feature" id="hero-feature"></div>
+  <div class="hero-side" id="hero-side"></div>
+</div>
+<div class="hero-empty" id="hero-empty">
+  <div class="hero-empty-inner"><h3>Willkommen bei WandelWeise</h3><p>Erstelle deinen ersten Beitrag im Admin-Bereich.</p></div>
+</div>
+
+<div class="reflection-line">
+  <div class="rl-inner">
+    <div class="rl-item"><i class="fas fa-circle"></i> <span>NEU</span> Die Kunst des Wandels</div>
+    <div class="rl-item"><i class="fas fa-circle"></i> Alte Weisheiten neu denken</div>
+    <div class="rl-item"><i class="fas fa-circle"></i> Achtsamkeit im Alltag</div>
+    <div class="rl-item"><i class="fas fa-circle"></i> Gesellschaft im Umbruch</div>
+    <div class="rl-item"><i class="fas fa-circle"></i> Wege zur Selbsterkenntnis</div>
+  </div>
+</div>
+
+<div class="main">
+  <div>
+    <div class="sec-hd">
+      <div class="sec-hd-icon"><i class="fas fa-feather"></i></div>
+      <div class="sec-hd-title">Neue Reflexionen</div>
+      <div class="sec-hd-line"></div>
+      <div class="sec-hd-count" id="sec-count">0 Beiträge</div>
+    </div>
+    <div class="posts-grid" id="posts-list">
+      <div class="empty-state"><h3>Noch keine Artikel</h3><p>Erstelle deinen ersten Beitrag im Admin-Bereich.</p></div>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="about-box">
+      <div class="ab-title">Über WandelWeise</div>
+      <div class="ab-text">Ein Magazin für alle, die Wandel verstehen und Weisheit suchen. Reflexionen über Leben, Gesellschaft und die Kunst des Wandels.</div>
+      <a href="#" class="ab-link">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="widget">
+      <div class="w-hd"><i class="fas fa-clock"></i><div class="w-hd-title">Neueste Gedanken</div></div>
+      <div class="w-body" id="sidebar-recent"></div>
+    </div>
+    <div class="widget">
+      <div class="w-hd"><i class="fas fa-tags"></i><div class="w-hd-title">Themen</div></div>
+      <div class="w-body">
+        <ul class="cat-list">
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Leben</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Gesellschaft</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Philosophie</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Psychologie</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Spiritualität</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Kultur</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="fl-logo">
+        <div class="fl-name">Wandel<span>Weise</span></div>
+        <div class="fl-sub">WANDEL · WEISHEIT · REFLEXION</div>
+      </div>
+      <div class="fb-text">WandelWeise – Ein Magazin für alle, die Wandel verstehen und Weisheit suchen. Reflexionen über Leben, Gesellschaft und die Kunst des Wandels.</div>
+    </div>
+    <div class="fc">
+      <h4>Rubriken</h4>
+      <a href="#"><i class="fas fa-chevron-right"></i>Leben</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Gesellschaft</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Philosophie</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Psychologie</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Spiritualität</a>
+    </div>
+    <div class="fc">
+      <h4>Service</h4>
+      <a href="#"><i class="fas fa-chevron-right"></i>Newsletter</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Archiv</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>RSS Feed</a>
+    </div>
+    <div class="fc">
+      <h4>Info</h4>
+      <a href="#"><i class="fas fa-chevron-right"></i>Über uns</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Impressum</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Datenschutz</a>
+      <a href="#"><i class="fas fa-chevron-right"></i>Kontakt</a>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <span>&copy; 2026 WandelWeise — Alle Rechte vorbehalten</span>
+    <div><a href="#">Impressum</a><a href="#">Datenschutz</a></div>
+  </div>
+</footer>
+<a href="admin.html" class="admin-link"><i class="fas fa-feather"></i></a>
+
+<script>
+// Constants
+const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+const SITE_NAME = 'wandelweise';
+const RAW_URL = `https://gist.githubusercontent.com/Hamzamain-spec/${GIST_ID}/raw/posts.json`;
+
+function toggleMenu(){document.getElementById('mobile-nav').classList.toggle('open');}
+
+async function loadPosts() {
+  try {
+    const response = await fetch(RAW_URL);
+    const allPosts = await response.json();
+    
+    // Filter posts by site name
+    const posts = Array.isArray(allPosts) 
+      ? allPosts.filter(p => p.site === SITE_NAME).reverse()
+      : [];
+    
+    document.getElementById('sec-count').textContent = posts.length + ' Beiträge';
+    
+    if (!posts.length) {
+      document.getElementById('hero-empty').style.display = 'block';
+      document.getElementById('hero-section').style.display = 'none';
+      document.getElementById('posts-list').innerHTML = '<div class="empty-state"><h3>Noch keine Artikel</h3><p>Erstelle deinen ersten Beitrag im Admin-Bereich.</p></div>';
+      return;
+    }
+    
+    document.getElementById('hero-section').style.display = 'grid';
+    document.getElementById('hero-empty').style.display = 'none';
+    
+    // Hero feature (latest post)
+    const p0 = posts[0];
+    const fd = new Date(p0.date).toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+    const fullText0 = p0.content.replace(/<[^>]+>/g, '');
+    const heroExc = fullText0.length > 160 ? fullText0.substring(0, fullText0.lastIndexOf(' ', 160)) + '...' : fullText0;
+    
+    const hf = document.getElementById('hero-feature');
+    hf.onclick = () => location.href = 'post.html?id=' + p0.id;
+    hf.innerHTML = `
+      <div class="hero-feature-img"><div class="hfi-icon"><i class="fas fa-feather"></i></div><div class="hfi-label">REFLEXION</div></div>
+      <div class="hero-feature-body">
+        <div class="hero-cat">${p0.category || 'Allgemein'}</div>
+        <div class="hero-title">${p0.title}</div>
+        <div class="hero-excerpt">${heroExc}</div>
+        <div class="hero-meta"><i class="fas fa-user"></i> <strong>${p0.author || 'Redaktion'}</strong> <span>·</span> <i class="fas fa-calendar-alt"></i> ${fd}</div>
+      </div>`;
+    
+    // Hero side (next 3 posts)
+    const hs = document.getElementById('hero-side');
+    hs.innerHTML = '';
+    posts.slice(1, 4).forEach(p => {
+      hs.innerHTML += `<div class="hs-item" onclick="location.href='post.html?id=${p.id}'">
+        <div class="hsi-cat">${p.category || 'Allgemein'}</div>
+        <div class="hsi-title">${p.title}</div>
+        <div class="hsi-meta"><i class="fas fa-user"></i> ${p.author || 'Redaktion'} · <i class="fas fa-calendar-alt"></i> ${new Date(p.date).toLocaleDateString('de-DE')}</div>
+      </div>`;
+    });
+    
+    // Posts grid
+    const pl = document.getElementById('posts-list');
+    pl.innerHTML = '';
+    posts.forEach((p, i) => {
+      const date = new Date(p.date).toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+      const fullText = p.content.replace(/<[^>]+>/g, '');
+      const exc = fullText.length > 90 ? fullText.substring(0, fullText.lastIndexOf(' ', 90)) + '...' : fullText;
+      
+      pl.innerHTML += `<div class="post-card" onclick="location.href='post.html?id=${p.id}'">
+        <div class="post-card-img"><div class="pci-icon"><i class="fas fa-leaf"></i></div><div class="pci-cat">${p.category || 'Allgemein'}</div></div>
+        <div class="post-card-body">
+          <div class="pc-meta"><i class="fas fa-user"></i> ${p.author || 'Redaktion'} <span>·</span> <i class="fas fa-clock"></i> ${Math.max(1, Math.round(p.content.replace(/<[^>]+>/g, '').split(' ').length / 200))} Min.</div>
+          <div class="pc-title">${p.title}</div>
+          <div class="pc-exc">${exc}</div>
+          <div class="pc-foot">
+            <span class="pc-author"><i class="fas fa-calendar-alt"></i> ${new Date(p.date).toLocaleDateString('de-DE', {day:'numeric', month:'short'})}</span>
+            <span class="pc-read">Lesen <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>`;
+    });
+    
+    // Sidebar recent
+    const sr = document.getElementById('sidebar-recent');
+    sr.innerHTML = '';
+    posts.slice(0, 5).forEach(p => {
+      sr.innerHTML += `<div class="wi" onclick="location.href='post.html?id=${p.id}'">
+        <div class="wi-cat">${p.category || 'Allgemein'}</div>
+        <a class="wi-title" href="post.html?id=${p.id}">${p.title}</a>
+        <div class="wi-meta"><i class="fas fa-user"></i> ${p.author || 'Redaktion'} · <i class="fas fa-calendar-alt"></i> ${new Date(p.date).toLocaleDateString('de-DE')}</div>
+      </div>`;
+    });
+    
+  } catch (e) {
+    console.error('Error loading posts:', e);
+    document.getElementById('hero-empty').style.display = 'block';
+  }
+}
+
+// Load posts on page load
+loadPosts();
+
+// Auto-refresh every 30 seconds
+setInterval(loadPosts, 30000);
+</script>
+</body>
+</html>
