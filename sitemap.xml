@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wandelweise.de/</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://hamzamain-spec.github.io/wandelweise/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wandelweise.de/index.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://wandelweise.de/post.html?id=1773484205347</loc>
+    <loc>https://hamzamain-spec.github.io/wandelweise/#/post/1773484205347</loc>
     <lastmod>2026-03-14</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wandelweise.de/post.html?id=post-1775654224828</loc>
+    <loc>https://hamzamain-spec.github.io/wandelweise/#/post/post-1775654224828</loc>
     <lastmod>2026-04-08</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>
